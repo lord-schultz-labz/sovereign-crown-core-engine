@@ -1,0 +1,11 @@
+- Inserir Retângulo no Menu.html (Transparente em CSS)
+
+- Inserir Botões de Navegação
+
+- Ideia de um possível menu suspenso
+
+- Ideia de Inserir o header igual o nosso Figma.
+
+- Estudar HTML 5 juntamente ao CSS
+
+- Quando clicar em cliente fazer uma animação dos Balões se Locomovendo pro Header em JS

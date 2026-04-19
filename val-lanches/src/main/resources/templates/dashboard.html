@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Val Lanches - Dashboard da Cozinha</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .card-status {
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* 🎨 Cores suaves */
+        .status-IN_PROGRESS {
+            background-color: #fff4db; /* amarelo suave */
+        }
+
+        .status-FINISHED {
+            background-color: #e6f7ed; /* verde suave */
+        }
+
+        .status-CANCELLED {
+            background-color: #fdeaea; /* vermelho suave */
+        }
+
+        .order-id {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .order-total {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .order-items {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">🍔 Dashboard da Cozinha</h2>
+
+    <div class="row" id="dashboard"></div>
+
+</div>
+
+<script>
+
+// 🔄 Atualiza a cada 2 segundos
+setInterval(loadDashboard, 2000);
+
+// 📥 Carregar pedidos
+function loadDashboard() {
+    fetch('/orders')
+        .then(res => res.json())
+        .then(data => {
+
+            let container = document.getElementById("dashboard");
+            container.innerHTML = "";
+
+            data.forEach(order => {
+
+                let itemsHTML = "";
+
+                if (order.items) {
+                    order.items.forEach(i => {
+                        itemsHTML += `
+                            <div>• ${i.description} (R$ ${i.price})</div>
+                        `;
+                    });
+                }
+
+                container.innerHTML += `
+                    <div class="col-md-4">
+                        <div class="card-status status-${order.status}">
+                            
+                            <div class="order-id">
+                                Pedido #${order.id}
+                            </div>
+
+                            <div class="order-total">
+                                ${order.numberOfItems} itens | R$ ${order.totalPrice}
+                            </div>
+
+                            <div class="order-items">
+                                ${itemsHTML}
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+            });
+
+        });
+}
+
+// 🚀 Inicial
+loadDashboard();
+
+</script>
+
+</body>
+</html>
