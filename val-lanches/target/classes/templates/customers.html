@@ -9,28 +9,36 @@
     <style>
         body {
             background: #f8f9fa;
-            padding-top: 160px; /* prevents overlap with fixed header */
         }
 
-        /* 🔝 HEADER FIXO CENTRAL */
+        /* 🔝 HEADER */
         .brand-header {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: sticky;
+            top: 12px;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: center;
+
+            margin-bottom: 25px; /* ✅ space between logo and form */
+        }
+
+        .logo-box {
             background: rgba(255, 245, 233, 0.95);
             border: 1px solid #ffd8a8;
-            border-radius: 22px;
-            padding: 18px 28px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(6px); /* ✨ modern look */
-            z-index: 1000;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
         }
 
-        .brand-header img {
-            width: 110px;
-            height: 110px;
+        .logo-box img {
+            width: 150px;
+            height: 150px;
             object-fit: contain;
+        }
+
+        /* 📦 FORM CARD */
+        .form-section {
+            margin-top: 0;
         }
 
         .card {
@@ -41,45 +49,44 @@
             border-radius: 10px;
         }
 
-        /* 🔽 SEPARATION FROM HEADER */
-        .form-section {
-            margin-top: 30px;
-        }
-
-        /* 🔥 BUTTON */
+        /* 🔘 BUTTON */
         .btn-add {
-            padding: 12px 60px;
-            font-size: 1.2rem;
-            border-radius: 14px;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+            padding: 10px 50px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
         }
 
         .btn-container {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
+            margin: 18px 0; /* balanced spacing */
+        }
+
+        /* 📋 TABLE */
+        .table-card {
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
 
-<!-- 🔝 LOGO FIXO -->
+<!-- 🔝 HEADER -->
 <div class="brand-header">
-    <img src="/images/val-lanches.png" alt="Logo Val Lanches">
+    <div class="logo-box">
+        <img src="/images/val-lanches.png" alt="Logo Val Lanches">
+    </div>
 </div>
 
 <div class="container">
 
     <!-- 🧾 FORM -->
     <div class="form-section">
-        <div class="card shadow-sm w-100">
+        <div class="card shadow-sm">
             <div class="card-body">
 
-                <h5 class="card-title text-center mb-4">
-                    Adicionar ou Excluir Clientes
-                </h5>
-
+                
                 <div class="row g-3">
                     <div class="col-md-3">
                         <input id="name" type="text" class="form-control" placeholder="Nome">
@@ -102,15 +109,15 @@
         </div>
     </div>
 
-    <!-- 🔥 BOTÃO -->
+    <!-- 🔥 BUTTON -->
     <div class="btn-container">
         <button class="btn btn-success btn-add" onclick="addCustomer()">
             Adicionar
         </button>
     </div>
 
-    <!-- 📋 LISTA -->
-    <div class="card shadow-sm mb-5">
+    <!-- 📋 LIST -->
+    <div class="card shadow-sm table-card">
         <div class="card-body">
 
             <h5 class="card-title">Lista de Clientes</h5>
@@ -136,7 +143,6 @@
 </div>
 
 <script>
-
 let selectedId = null;
 
 setInterval(loadCustomers, 2000);
@@ -158,7 +164,9 @@ function loadCustomers() {
                         <td>${c.email}</td>
                         <td>${c.address}</td>
                         <td>
-                            <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${c.id}); event.stopPropagation();">Excluir</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${c.id}); event.stopPropagation();">
+                                Excluir
+                            </button>
                         </td>
                     </tr>
                 `;
@@ -168,7 +176,6 @@ function loadCustomers() {
 }
 
 function addCustomer() {
-
     let customer = {
         name: document.getElementById("name").value,
         phone: document.getElementById("phone").value,
@@ -190,7 +197,6 @@ function deleteCustomer(id) {
 }
 
 function selectCustomer(id, name, phone, email, address) {
-
     selectedId = id;
 
     document.getElementById("name").value = name;
@@ -200,7 +206,6 @@ function selectCustomer(id, name, phone, email, address) {
 }
 
 loadCustomers();
-
 </script>
 
 </body>
