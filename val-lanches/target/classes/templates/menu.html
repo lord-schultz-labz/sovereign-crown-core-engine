@@ -15,6 +15,7 @@
         .menu-logo {
             width: min(320px, 70vw);
             filter: drop-shadow(0 18px 30px rgba(180, 74, 0, 0.22));
+            border-radius: 28px;
         }
 
         .menu-card {
@@ -24,6 +25,40 @@
             border: 1px solid rgba(255, 166, 0, 0.2);
             border-radius: 28px;
             box-shadow: 0 24px 50px rgba(106, 52, 0, 0.12);
+        }
+
+        /* 🎈 Balloon buttons */
+        .menu-btn {
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid rgba(0,0,0,0.15);
+            color: #ffffff;
+            transition: all 0.35s ease; /* slower + smoother */
+        }
+
+        .menu-btn:hover {
+            background-color: #ffffff !important; /* turn white */
+            border: 2px solid #343434; /* dark silver */
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+
+        /* 🎨 Custom colors */
+        .btn-dashboard {
+            background-color: rgb(41, 41, 41);
+        }
+
+        .btn-clientes {
+            background-color: rgb(41, 41, 41);
+        }
+
+        .btn-produtos {
+            background-color: rgb(41, 41, 41);
+        }
+
+        .btn-pedidos {
+            background-color: rgb(41, 41, 41);
         }
     </style>
 </head>
@@ -35,13 +70,15 @@
     <div class="menu-card p-4 p-md-5">
         <img src="/images/val-lanches.png" alt="Logo Val Lanches" class="menu-logo mb-3">
 
-        <p class="text-uppercase text-muted fw-semibold mb-4" style="letter-spacing: 0.18em;">Menu principal</p>
+        <p class="text-uppercase text-muted fw-semibold mb-4" style="letter-spacing: 0.18em;">
+            Menu principal
+        </p>
 
         <div class="d-grid gap-3 col-12 col-md-8 mx-auto">
-            <a href="/dashboard" class="btn btn-dark btn-lg">Dashboard</a>
-            <a href="/customers-page" class="btn btn-primary btn-lg">Clientes</a>
-            <a href="/products-page" class="btn btn-success btn-lg">Produtos</a>
-            <a href="/orders-page" class="btn btn-warning btn-lg">Pedidos</a>
+            <a href="/dashboard" class="btn menu-btn btn-dashboard btn-lg">Dashboard</a>
+            <a href="/customers-page" class="btn menu-btn btn-clientes btn-lg">Clientes</a>
+            <a href="/products-page" class="btn menu-btn btn-produtos btn-lg">Produtos</a>
+            <a href="/orders-page" class="btn menu-btn btn-pedidos btn-lg">Pedidos</a>
         </div>
     </div>
 
