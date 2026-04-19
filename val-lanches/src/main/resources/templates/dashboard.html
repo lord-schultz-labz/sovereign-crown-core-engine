@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <title>Val Lanches - Dashboard da Cozinha</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
             background-color: #f5f7fa;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fff5e9;
+            border: 1px solid #ffd8a8;
+            border-radius: 20px;
+            padding: 14px 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .brand-header img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
         }
 
         .card-status {
@@ -20,17 +36,16 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        /* 🎨 Cores suaves */
         .status-IN_PROGRESS {
-            background-color: #fff4db; /* amarelo suave */
+            background-color: #fff4db;
         }
 
         .status-FINISHED {
-            background-color: #e6f7ed; /* verde suave */
+            background-color: #e6f7ed;
         }
 
         .status-CANCELLED {
-            background-color: #fdeaea; /* vermelho suave */
+            background-color: #fdeaea;
         }
 
         .order-id {
@@ -54,7 +69,13 @@
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">🍔 Dashboard da Cozinha</h2>
+    <div class="brand-header mb-4">
+        <img src="/images/val-lanches.png" alt="Logo Val Lanches">
+        <div>
+            <h1 class="h3 mb-1">Val Lanches</h1>
+            <p class="text-muted mb-0">Dashboard da cozinha</p>
+        </div>
+    </div>
 
     <div class="row" id="dashboard"></div>
 
@@ -62,10 +83,8 @@
 
 <script>
 
-// 🔄 Atualiza a cada 2 segundos
 setInterval(loadDashboard, 2000);
 
-// 📥 Carregar pedidos
 function loadDashboard() {
     fetch('/orders')
         .then(res => res.json())
@@ -81,7 +100,7 @@ function loadDashboard() {
                 if (order.items) {
                     order.items.forEach(i => {
                         itemsHTML += `
-                            <div>• ${i.description} (R$ ${i.price})</div>
+                            <div>- ${i.description} (R$ ${i.price})</div>
                         `;
                     });
                 }
@@ -89,7 +108,6 @@ function loadDashboard() {
                 container.innerHTML += `
                     <div class="col-md-4">
                         <div class="card-status status-${order.status}">
-                            
                             <div class="order-id">
                                 Pedido #${order.id}
                             </div>
@@ -101,7 +119,6 @@ function loadDashboard() {
                             <div class="order-items">
                                 ${itemsHTML}
                             </div>
-
                         </div>
                     </div>
                 `;
@@ -110,7 +127,6 @@ function loadDashboard() {
         });
 }
 
-// 🚀 Inicial
 loadDashboard();
 
 </script>
