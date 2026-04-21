@@ -8,10 +8,9 @@
 
     <style>
         body {
-            background: linear-gradient(145deg, #f0f2f5, #e6ebf0);
+            background: linear-gradient(180deg, #fcc82b 0%, #a84c42 100%);
         }
 
-        /* HEADER */
         .brand-header {
             display: flex;
             flex-direction: column;
@@ -27,32 +26,23 @@
         .page-title {
             font-size: 1.8rem;
             font-weight: 600;
-            margin-top: 5px;
-            margin-bottom: 15px;
+            margin: 10px 0 15px;
         }
 
-        /* CARD */
         .card {
             border-radius: 18px;
             border: none;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         }
 
-        /* INPUTS */
         .form-control {
             background: #eef1f4;
-            border: 1px solid #dde2e7;
             border-radius: 10px;
+            border: 1px solid #dde2e7;
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05),
                         inset -2px -2px 5px rgba(255,255,255,0.7);
         }
 
-        .form-control:focus {
-            background: #eef1f4;
-            box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
-        }
-
-        /* BUTTON */
         .btn-container {
             text-align: center;
             margin: 20px 0;
@@ -64,14 +54,9 @@
             box-shadow: 0 6px 14px rgba(0,0,0,0.15);
         }
 
-        /* TABLE */
         table {
-            table-layout: fixed;
             width: 100%;
-        }
-
-        td:nth-child(2) {
-            word-break: break-word;
+            table-layout: fixed;
         }
 
         tbody tr:hover {
@@ -93,20 +78,16 @@
     <!-- FORM -->
     <div class="card p-3">
         <div class="row g-3">
-            <div class="col-md-3">
-                <input id="price" type="number" step="0.01" class="form-control" placeholder="Preco">
+            <div class="col-md-4">
+                <input id="nome" class="form-control" placeholder="Nome">
             </div>
 
-            <div class="col-md-3">
-                <input id="description" class="form-control" placeholder="Descricao">
+            <div class="col-md-4">
+                <input id="preco" type="text" class="form-control" placeholder="Preco">
             </div>
 
-            <div class="col-md-3">
-                <input id="brand" class="form-control" placeholder="Marca">
-            </div>
-
-            <div class="col-md-3">
-                <input id="supplier" class="form-control" placeholder="Fornecedor">
+            <div class="col-md-4">
+                <input id="fornecedor" class="form-control" placeholder="Fornecedor">
             </div>
         </div>
     </div>
@@ -124,9 +105,8 @@
             <table class="table table-striped">
                 <thead class="table-dark">
                     <tr>
+                        <th>Nome</th>
                         <th>Preco</th>
-                        <th>Descricao</th>
-                        <th>Marca</th>
                         <th>Fornecedor</th>
                         <th>Acoes</th>
                     </tr>
@@ -139,6 +119,38 @@
 </div>
 
 <script>
+
+const precoInput = document.getElementById('preco')
+
+precoInput.addEventListener('focus', () => {
+    if (!precoInput.value) {
+        precoInput.value = 'R$ '
+    }
+})
+
+precoInput.addEventListener('blur', () => {
+    if (precoInput.value === 'R$ ' || precoInput.value.trim() === '') {
+        precoInput.value = ''
+    }
+})
+
+precoInput.addEventListener('input', e => {
+    let value = e.target.value.replace(/\D/g, '')
+
+    if (!value) {
+        e.target.value = 'R$ '
+        return
+    }
+
+    value = (parseInt(value) / 100).toFixed(2) + ''
+
+    value = value.replace('.', ',')
+
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+    e.target.value = 'R$ ' + value
+})
+
 let selectedId = null
 
 setInterval(loadProducts, 2000)
@@ -154,10 +166,9 @@ function loadProducts() {
             const row = document.createElement('tr')
 
             row.innerHTML = `
-                <td>R$ ${p.price}</td>
-                <td>${p.description}</td>
-                <td>${p.brand}</td>
-                <td>${p.supplier}</td>
+                <td>${p.nome}</td>
+                <td>${formatCurrency(p.preco)}</td>
+                <td>${p.fornecedor}</td>
                 <td>
                     <button class="btn btn-warning btn-sm">Editar</button>
                     <button class="btn btn-danger btn-sm">Excluir</button>
@@ -206,10 +217,9 @@ function deleteProduct(id) {
 function selectProduct(p) {
     selectedId = p.id
 
-    price.value = p.price
-    description.value = p.description
-    brand.value = p.brand
-    supplier.value = p.supplier
+    nome.value = p.nome
+    preco.value = p.preco
+    fornecedor.value = p.fornecedor
 
     updateButton()
 }
@@ -228,18 +238,37 @@ function updateButton() {
 
 function getData() {
     return {
-        price: price.value,
-        description: description.value,
-        brand: brand.value,
-        supplier: supplier.value
+        nome: nome.value,
+        preco: parseCurrency(preco.value),
+        fornecedor: fornecedor.value
     }
 }
 
+function parseCurrency(value) {
+    if (!value) return 0
+
+    return parseFloat(
+        value
+            .replace('R$', '')
+            .replace(/\./g, '')
+            .replace(',', '.')
+            .trim()
+    )
+}
+
 function clearForm() {
-    price.value = ''
-    description.value = ''
-    brand.value = ''
-    supplier.value = ''
+    nome.value = ''
+    preco.value = ''
+    fornecedor.value = ''
+}
+
+function formatCurrency(value) {
+    if (value == null) return ''
+
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(value)
 }
 
 loadProducts()
