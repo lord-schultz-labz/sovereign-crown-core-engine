@@ -9,31 +9,18 @@
     <style>
         body {
             min-height: 100vh;
-            background: linear-gradient(180deg, #fcc82b 0%, #a84c42 100%);
+            background: linear-gradient(180deg, #fff8ef 0%, #ffe4be 100%);
         }
 
         .login-card {
             width: 360px;
             border-radius: 24px;
-            color: #424242;
         }
 
         .login-logo {
             width: 250px;
             height: 250px;
             object-fit: contain;
-        }
-
-        .btn-login {
-            background-color: #a84c42;
-            border-color: #fcc82b;
-            color: #fff;
-        }
-
-        .btn-login:hover {
-            background-color: #fcc82b;
-            border-color: #923f36;
-            color: black;
         }
     </style>
 </head>
@@ -48,11 +35,11 @@
 
     <form method="post" action="/login">
 
-        <input name="username" class="form-control mb-2" placeholder="Usuario">
+        <input name="username" class="form-control mb-2" placeholder="User">
 
-        <input name="password" type="password" class="form-control mb-3" placeholder="Senha">
+        <input name="password" type="password" class="form-control mb-3" placeholder="Password">
 
-        <button class="btn btn-login w-100" type="submit">Entrar</button>
+        <button class="btn btn-primary w-100" type="submit">Entrar</button>
 
     </form>
 

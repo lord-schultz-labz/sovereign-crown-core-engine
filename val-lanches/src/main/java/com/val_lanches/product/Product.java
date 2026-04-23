@@ -1,10 +1,6 @@
 package com.val_lanches.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -14,51 +10,59 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-
-    private Double preco;
-
-    private String fornecedor;
+    private Double price;
+    private String description;
+    private String brand;
+    private String supplier;
 
     public Product() {}
 
-    public Product(String nome, Double preco, String fornecedor) {
-        this.nome = nome;
-        this.preco = preco;
-        this.fornecedor = fornecedor;
+    public Product(Double price, String description, String brand, String supplier) {
+        this.price = price;
+        this.description = description;
+        this.brand = brand;
+        this.supplier = supplier;
     }
 
-    // GETTERS AND SETTERS
+    // GETTERS E SETTERS
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) { // necessário pro update
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public Double getPreco() {
-        return preco;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getFornecedor() {
-        return fornecedor;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }
